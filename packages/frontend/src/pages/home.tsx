@@ -1,6 +1,7 @@
 import { Card } from "react-bootstrap";
 import { LoadingSpinner,Container } from "../components";
-import { useEffect } from "react";
+import {GATEWAY_URL} from "../config.json";
+import { useEffect, useState } from "react";
 
 interface Note {
     noteId: string;
@@ -8,27 +9,6 @@ interface Note {
     content: string;
     attachment: boolean;
   }
-
-const dummyNotes: Note[] = [
-    {
-        noteId: "1",
-        createdAt: "2023-01-01T12:00:00.000Z",
-        content: "This is a dummy note.",
-        attachment: false,
-    },
-    {
-        noteId: "2",
-        createdAt: "2023-01-02T12:00:00.000Z",
-        content: "This is another dummy note.",
-        attachment: true,
-    },
-    {
-        noteId: "3",
-        createdAt: "2023-01-03T12:00:00.000Z",
-        content: "This is a third dummy note.",
-        attachment: false,
-    },
-];
 
 const renderNotes = (notes: Note[]) =>
     notes.map((note) => (
@@ -53,12 +33,34 @@ const renderNotes = (notes: Note[]) =>
 
 
 export const Home = () => {
+    const [notes, setNotes] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [errorMsg, setErrorMsg] = useState("");
+
+
     useEffect(() => {
-      renderNotes(dummyNotes)  
+
+        const fetchNotes = async () => {
+            setIsLoading(true);
+            const fetchURL = `${GATEWAY_URL}notes`;
+
+            try {
+                const response = await fetch(fetchURL);
+                const data = await response.json();
+                console.log({data})
+                setNotes(data.message);
+            } catch (error) {
+                setErrorMsg(`${error.toString()} - ${fetchURL}`);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+      fetchNotes()
     },[])
+
     return (
         <Container header={<div>Your Notes</div>}>
-        <div>{renderNotes(dummyNotes)}</div>
+            <div>{renderNotes(notes)}</div>
         </Container>
     );
 }
