@@ -1,12 +1,11 @@
-
-// import {appApi} from 
-
 import {
     aws_apigateway as apigw,
     CfnOutput,
     Stack,
-    StackProps
+    StackProps,
+    aws_dynamodb as dynamodb, aws_lambda as lambda
   } from "aws-cdk-lib";
+import { Lambda } from "aws-cdk-lib/aws-ses-actions";
 import { Construct } from "constructs";
 
 interface Note {
@@ -67,8 +66,22 @@ export class AwsSdkJsAppStack extends Stack {
                   "method.response.header.Access-Control-Allow-Origin": true,
                   "method.response.header.Access-Control-Allow-Methods": true
                 },
-              }]        });
+              }]        
+            });
 
+        notes.addMethod(
+            "PUT",
+            new apigw.LambdaIntegration(
+                new lambda.Function(this, "handler", {
+                    runtime: lambda.Runtime.NODEJS_18_X,
+                    handler: "app.handler",
+                    code: lambda.Code.fromAsset(`../backend/dist/createNote`),
+                    environment: {
+                      NOTES_TABLE_NAME: "note",
+                    },
+                  })
+            )
+        )
         new CfnOutput(this, "GatewayUrl", { value: api.url });
         new CfnOutput(this, "Region", { value: this.region });
     
