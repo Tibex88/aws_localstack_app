@@ -1,5 +1,6 @@
 import { Card } from "react-bootstrap";
 import { LoadingSpinner,Container } from "../components";
+import { useEffect } from "react";
 
 interface Note {
     noteId: string;
@@ -52,6 +53,9 @@ const renderNotes = (notes: Note[]) =>
 
 
 export const Home = () => {
+    useEffect(() => {
+      renderNotes(dummyNotes)  
+    },[])
     return (
         <Container header={<div>Your Notes</div>}>
         <div>{renderNotes(dummyNotes)}</div>
