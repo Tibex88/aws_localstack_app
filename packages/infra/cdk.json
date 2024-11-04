@@ -3,6 +3,10 @@
     "context": {
         "@aws-cdk/core:bootstrapRegion": "us-east-1",
         "@aws-cdk/core:account": "000000000000"
+      },
+      "watch": {
+        "include": ["cdk/**/*.ts", "bin/**/*.ts"], 
+        "exclude": ["**/__tests__/**"]
       }
 }
   
