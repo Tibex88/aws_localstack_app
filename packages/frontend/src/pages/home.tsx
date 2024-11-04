@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { LoadingSpinner,Container } from "../components";
 import {GATEWAY_URL} from "../config.json";
 import { useEffect, useState } from "react";
@@ -58,9 +58,18 @@ export const Home = () => {
       fetchNotes()
     },[])
 
+    const createNewNote = () => (
+        <a key="new" href="note/new">
+          <Button variant="primary" block>
+            Create a new note
+          </Button>
+      </a>
+      );
+
     return (
         <Container header={<div>Your Notes</div>}>
             <div>{renderNotes(notes)}</div>
+            {createNewNote()}
         </Container>
     );
 }

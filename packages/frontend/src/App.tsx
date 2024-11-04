@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom'
 
 // pages
 import { Home } from './pages/home'
+import { Create } from './pages/create'
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
     <Suspense fallback={<div>Loading...</div>}>
     <Routes>
       <Route path="/" element={<Home />}/>
-      <Route path="/about" element={<h1>About</h1>}/>
+      <Route path="/note/new" element={<Create />}/>
       <Route path="*" element={<h1>Page not found</h1>}/>
     </Routes>
     </Suspense>
