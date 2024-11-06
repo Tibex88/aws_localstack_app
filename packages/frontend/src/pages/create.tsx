@@ -16,7 +16,7 @@ export const Create = () => {
       alert(noteContent)
       setIsLoading(true);
       } catch (error) {
-        setErrorMsg(`${error.toString()} - ${noteContent}`);
+        if (error instanceof Error) setErrorMsg(`${error.toString()} - ${noteContent}`);
       } finally {
         setIsLoading(false);
     }
@@ -40,7 +40,7 @@ export const Create = () => {
             }}
           />
         </Form.Group>
-        <Button type="submit" disabled={!noteContent || isLoading} block>
+        <Button type="submit" disabled={!noteContent || isLoading} className="w-100">
           {isLoading ? <ButtonSpinner /> : ""}
           {isLoading ? "Creating..." : "Create"}
         </Button>

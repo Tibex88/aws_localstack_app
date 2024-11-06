@@ -50,7 +50,7 @@ export const Home = () => {
                 console.log({data})
                 setNotes(data.message);
             } catch (error) {
-                setErrorMsg(`${error.toString()} - ${fetchURL}`);
+              if (error instanceof Error) setErrorMsg(`${error.toString()} - ${fetchURL}`);
             } finally {
                 setIsLoading(false);
             }
@@ -60,7 +60,7 @@ export const Home = () => {
 
     const createNewNote = () => (
         <a key="new" href="note/new">
-          <Button variant="primary" block>
+          <Button variant="primary" className="w-100">
             Create a new note
           </Button>
       </a>
