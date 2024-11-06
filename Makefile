@@ -24,6 +24,8 @@ REQUIREMENTS := requirements.txt
 # 	rm -rf $(VENV_DIR)
 # 	@echo "Virtual environment removed"
 
+
+####Virtual Environment
 # Install requirements into the virtual environment
 install:
 	$(VENV_DIR)/bin/pip install -r $(REQUIREMENTS)
@@ -32,22 +34,40 @@ install:
 # Run localstack in the virtual  ind etacked mode
 # this will pull localstack image from docker of not already present
 localstack_start:
-	localstack start -d 
+	localstack start
 	docker ps -a | grep localstack 
 
 localstack_stop:
 	localstack stop
 
-# Deploy the infrastructure
-build:
-		yarn && yarn build:backend;
 
+####Infrastructure & Backend
+# Build the backend
+build:
+		cd packages/backend && yarn && yarn build;
+# Bootstrap the infrastructure
 bootstrap:
-		yarn cdklocal bootstrap;
+		cd packages/infra && yarn && yarn cdklocal bootstrap;
 
 ## Deploy the infrastructure
 deploy:
-		yarn cdklocal deploy;
+		cd packages/infra && yarn && yarn cdklocal deploy;
+
+# ####Frontend
+# Run the frontend
+run_frontend:
+		cd packages/frontend && yarn && yarn dev;
+# ## Build the frontend
+# build_frontend:
+# 	cd packages/frontend && yarn && yarn build
+
+# ## Bootstrap frontend
+# bootstrap_frontend:
+# 	cd packages/frontend && yarn cdklocal bootstrap --app="node dist/assets/*.js";
+
+# ## Deploy the frontend
+# deploy_frontend:
+# 		yarn cdklocal deploy --app="node dist/aws-sdk-js-notes-app-frontend.js";
 
 
 
