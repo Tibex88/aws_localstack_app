@@ -39,50 +39,50 @@ export class AwsSdkJsAppStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
-    //     const api = new apigw.RestApi(this, "endpoint");
-    //     const notes = api.root.addResource("notes");
+        const api = new apigw.RestApi(this, "endpoint");
+        const notes = api.root.addResource("notes");
 
-    //     notes.addMethod('GET', 
-    //     new apigw.MockIntegration(
-    //     {
-    //         integrationResponses: [{
-    //             statusCode: "200",
-    //             responseParameters: {
-    //               "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-    //               "method.response.header.Access-Control-Allow-Origin": "'*'",
-    //               "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST,PUT,DELETE'"
-    //             },
-    //           }],
-    //           passthroughBehavior: apigw.PassthroughBehavior.WHEN_NO_MATCH,
-    //           requestTemplates: {
-    //             "application/json": JSON.stringify({message: dummyNotes})
-    //           }
-    //         }), {
-    //           methodResponses: [{
-    //             statusCode: "200",
-    //             responseParameters: {
-    //               "method.response.header.Access-Control-Allow-Headers": true,
-    //               "method.response.header.Access-Control-Allow-Origin": true,
-    //               "method.response.header.Access-Control-Allow-Methods": true
-    //             },
-    //           }]        
-    //         });
+        notes.addMethod('GET', 
+        new apigw.MockIntegration(
+        {
+            integrationResponses: [{
+                statusCode: "200",
+                responseParameters: {
+                  "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                  "method.response.header.Access-Control-Allow-Origin": "'*'",
+                  "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST,PUT,DELETE'"
+                },
+              }],
+              passthroughBehavior: apigw.PassthroughBehavior.WHEN_NO_MATCH,
+              requestTemplates: {
+                "application/json": JSON.stringify({message: dummyNotes})
+              }
+            }), {
+              methodResponses: [{
+                statusCode: "200",
+                responseParameters: {
+                  "method.response.header.Access-Control-Allow-Headers": true,
+                  "method.response.header.Access-Control-Allow-Origin": true,
+                  "method.response.header.Access-Control-Allow-Methods": true
+                },
+              }]        
+            });
 
-    //     notes.addMethod(
-    //         "PUT",
-    //         new apigw.LambdaIntegration(
-    //             new lambda.Function(this, "handler", {
-    //                 runtime: lambda.Runtime.NODEJS_18_X,
-    //                 handler: "app.handler",
-    //                 code: lambda.Code.fromAsset(`../backend/dist/createNote`),
-    //                 environment: {
-    //                   NOTES_TABLE_NAME: "note",
-    //                 },
-    //               })
-    //         )
-    //     )
-    //     new CfnOutput(this, "GatewayUrl", { value: api.url });
-    //     new CfnOutput(this, "Region", { value: this.region });
+        notes.addMethod(
+            "PUT",
+            new apigw.LambdaIntegration(
+                new lambda.Function(this, "handler", {
+                    runtime: lambda.Runtime.NODEJS_18_X,
+                    handler: "app.handler",
+                    code: lambda.Code.fromAsset(`../backend/dist/createNote`),
+                    environment: {
+                      NOTES_TABLE_NAME: "note",
+                    },
+                  })
+            )
+        )
+        new CfnOutput(this, "GatewayUrl", { value: api.url });
+        new CfnOutput(this, "Region", { value: this.region });
     
     }
 }
