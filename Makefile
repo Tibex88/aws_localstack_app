@@ -34,8 +34,11 @@ install:
 # Run localstack in the virtual  ind etacked mode
 # this will pull localstack image from docker of not already present
 localstack_start:
-	localstack start -d \
-	docker ps -a | grep localstack \
+	localstack start -d 
+	docker ps -a | grep localstack 
+
+localstack_stop:
+	localstack stop
 
 # Deploy the infrastructure
 build:
