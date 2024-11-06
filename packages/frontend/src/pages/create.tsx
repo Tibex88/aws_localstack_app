@@ -20,7 +20,7 @@ export const Create = () => {
 
     try {
       await fetch(createNoteURL, {
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify({ content: noteContent }),
       });
       navigate("/");
