@@ -32,7 +32,6 @@ export const handler = async (event: APIGatewayEvent) => {
 
         await client.send(new PutItemCommand(params));
         return success(params.Item);
-        return 1
 
     } catch (error) {
         console.log(error)

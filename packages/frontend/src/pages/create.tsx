@@ -1,20 +1,29 @@
 import React, { FormEvent, useState } from 'react'
 import { Container,HomeButton,ButtonSpinner } from "../components";
 import { Form, Button, Alert } from "react-bootstrap";
-
+import {  useNavigate } from 'react-router-dom';
+import { GATEWAY_URL } from "../config.json";
 
 
 export const Create = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [noteContent, setNoteContent] = useState("");
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const createNoteURL = `${GATEWAY_URL}notes`;
+
+    setIsLoading(true);
 
     try {
-      alert(noteContent)
-      setIsLoading(true);
+      await fetch(createNoteURL, {
+        method: "PUT",
+        body: JSON.stringify({ content: noteContent }),
+      });
+      navigate("/");
       } catch (error) {
         if (error instanceof Error) setErrorMsg(`${error.toString()} - ${noteContent}`);
       } finally {
