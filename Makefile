@@ -2,29 +2,27 @@
 VENV_DIR := .venv
 
 # Python executable to use (you can specify a version, e.g., python3.8)
-PYTHON := python3
+PYTHON := python
 
 # Requirements file
 REQUIREMENTS := requirements.txt
 
-create:
-# Rule to create the virtual environment
-$(VENV_DIR)/bin/activate: 
-	$(PYTHON) -m venv $(VENV_DIR)
-	$(VENV_DIR)/bin/pip install --upgrade pip
-	@if [ -f $(REQUIREMENTS) ]; then \
-		$(VENV_DIR)/bin/pip install -r $(REQUIREMENTS); \
-	fi
-	@echo "Virtual environment created in $(VENV_DIR)"
+# create:
+# # Rule to create the virtual environment
+# 	$(PYTHON) -m venv $(VENV_DIR)
+# 	. $(VENV_DIR)/bin/activate
+# 	$(VENV_DIR)/bin/pip install --upgrade pip
+# 	@if [ -f $(REQUIREMENTS) ]; then \
+# 		$(VENV_DIR)/bin/pip install -r $(REQUIREMENTS); \
+# 	fi
+# 	@echo "Virtual environment created in $(VENV_DIR)"
 
-# Shortcut to activate the virtual environment (run `make activate` in the terminal)
-activate:
-	. $(VENV_DIR)/bin/activate;
+
 
 # Clean up the virtual environment directory
-clean:
-	rm -rf $(VENV_DIR)
-	@echo "Virtual environment removed"
+# clean:
+# 	rm -rf $(VENV_DIR)
+# 	@echo "Virtual environment removed"
 
 # Install requirements into the virtual environment
 install:

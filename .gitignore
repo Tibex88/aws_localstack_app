@@ -146,3 +146,6 @@ cdk.out
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+volume/
+localstack-main/

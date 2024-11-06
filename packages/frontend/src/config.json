@@ -1,4 +1,4 @@
 {
-    "GATEWAY_URL": "https://ukmx9qbutl.execute-api.localhost.localstack.cloud:4566/prod/",
+    "GATEWAY_URL": "https://ukmx9qbutl.execute-api.localhost.localstack.cloud:5566/prod/",
     "REGION": "us-east-1"
   }
