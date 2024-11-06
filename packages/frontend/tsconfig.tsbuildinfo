@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/ButtonSpinner.tsx","./src/components/Container.tsx","./src/components/HomeButton.tsx","./src/components/LoadingSpinner.tsx","./src/components/index.js","./src/pages/create.tsx","./src/pages/home.tsx"],"version":"5.6.3"}
