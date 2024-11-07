@@ -33,8 +33,9 @@ export const Create = () => {
 
 
   return (
+    
     <Container header={<p>Create Note</p>}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e)=>{handleSubmit(e)}}>
         {/* {errorMsg && <Alert variant="danger">{errorMsg}</Alert>} */}
         <Form.Group controlId="content">
           <Form.Label>Note Content</Form.Label>
