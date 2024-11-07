@@ -8,5 +8,6 @@
     "packages/backend",
     "packages/frontend",
     "packages/infra"
-  ]
+  ],
+  "packageManager": "yarn@1.22.1"
 }
