@@ -87,10 +87,7 @@ export class AwsSdkJsAppStack extends Stack {
             }).handler
           )
         );
-
-  
         new CfnOutput(this, "GatewayUrl", { value: api.url });
         new CfnOutput(this, "Region", { value: this.region });
-    
     }
 }
