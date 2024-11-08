@@ -46,18 +46,7 @@ export class AwsSdkJsAppStack extends Stack {
         });
 
         const api = new apigw.RestApi(this, "endpoint");
-        const notes = api.root.addResource("notes",{
-          defaultCorsPreflightOptions: {
-            allowOrigins: apigw.Cors.ALL_ORIGINS,
-          },
-        });
-
-        const note = notes.addResource("{id}", {
-          defaultCorsPreflightOptions: {
-            allowOrigins: apigw.Cors.ALL_ORIGINS,
-          },
-        });
-
+        const notes = api.root.addResource("notes");
         notes.addMethod(
             'GET',
             new apigw.LambdaIntegration(
@@ -78,6 +67,8 @@ export class AwsSdkJsAppStack extends Stack {
           )
         );
 
+      const note = notes.addResource("{id}");
+
         note.addMethod(
           "GET",
           new apigw.LambdaIntegration(
@@ -87,6 +78,27 @@ export class AwsSdkJsAppStack extends Stack {
             }).handler
           )
         );
+
+        note.addMethod(
+          "PUT",
+          new apigw.LambdaIntegration(
+            new Api(this, "updateNote", {
+              table,
+              grantActions: ["dynamodb:UpdateItem"],
+            }).handler
+          )
+        );
+
+        note.addMethod(
+          "DELETE",
+          new apigw.LambdaIntegration(
+            new Api(this, "deleteNote", {
+              table,
+              grantActions: ["dynamodb:DeleteItem"],
+            }).handler
+          )
+        );
+
         new CfnOutput(this, "GatewayUrl", { value: api.url });
         new CfnOutput(this, "Region", { value: this.region });
     }
