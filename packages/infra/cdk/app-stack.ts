@@ -46,58 +46,49 @@ export class AwsSdkJsAppStack extends Stack {
         });
 
         const api = new apigw.RestApi(this, "endpoint");
-        const notes = api.root.addResource("notes");
+        const notes = api.root.addResource("notes",{
+          defaultCorsPreflightOptions: {
+            allowOrigins: apigw.Cors.ALL_ORIGINS,
+          },
+        });
+
+        const note = notes.addResource("{id}", {
+          defaultCorsPreflightOptions: {
+            allowOrigins: apigw.Cors.ALL_ORIGINS,
+          },
+        });
 
         notes.addMethod(
             'GET',
             new apigw.LambdaIntegration(
-              new Api(this, "getNotes", {
+              new Api(this, "listNotes", {
                 table,
                 grantActions: ["dynamodb:Scan"],
               }).handler
             )
           );
-          
 
-        // notes.addMethod('GET', 
-        //   new apigw.MockIntegration(
-        //     {
-        //         integrationResponses: [{
-        //           statusCode: "200",
-        //           responseParameters: {
-        //             "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-        //             "method.response.header.Access-Control-Allow-Origin": "'*'",
-        //             "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST,PUT,DELETE'",
-        //           },
-        //         }],
-        //         passthroughBehavior: apigw.PassthroughBehavior.WHEN_NO_MATCH,
-        //         requestTemplates: {
-        //           "application/json": JSON.stringify({message: dummyNotes})
-        //         }
-        //       }), {
-        //         methodResponses: [{
-        //           statusCode: "200",
-        //           responseParameters: {
-        //             "method.response.header.Access-Control-Allow-Origin": true,
-        //             "method.response.header.Access-Control-Allow-Headers": true,
-        //             "method.response.header.Access-Control-Allow-Methods": true
-        //           },
-        //         }]        
-        // });
+        notes.addMethod(
+          "POST",
+          new apigw.LambdaIntegration(
+            new Api(this, "createNote", {
+              table,
+              grantActions: ["dynamodb:PutItem"],
+            }).handler
+          )
+        );
 
-        // notes.addMethod(
-        //     "POST",
-        //     new apigw.LambdaIntegration(
-        //         new lambda.Function(this, "handler", {
-        //             runtime: lambda.Runtime.NODEJS_18_X,
-        //             handler: "app.handler",
-        //             code: lambda.Code.fromAsset(`../backend/dist/createNote`),
-        //             environment: {
-        //               NOTES_TABLE_NAME: "note",
-        //             },
-        //           })
-        //     )
-        // )
+        note.addMethod(
+          "GET",
+          new apigw.LambdaIntegration(
+            new Api(this, "getNote", {
+              table,
+              grantActions: ["dynamodb:GetItem"],
+            }).handler
+          )
+        );
+
+  
         new CfnOutput(this, "GatewayUrl", { value: api.url });
         new CfnOutput(this, "Region", { value: this.region });
     
