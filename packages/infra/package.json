@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "cdk": "tsc && cdk",
-    "cdklocal": "tsc && cdklocal",
+    "cdklocal": "tsc && CDK_DEBUG=true cdklocal",
     "build": "tsc"
   },
   "dependencies": {

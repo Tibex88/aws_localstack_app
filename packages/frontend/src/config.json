@@ -1,4 +1,4 @@
 {
-    "GATEWAY_URL": "https://ro0ah5woq1.execute-api.localhost.localstack.cloud:4566/prod/",
+    "GATEWAY_URL": "https://jyomtvisfc.execute-api.localhost.localstack.cloud:4566/prod/",
     "REGION": "us-east-1"
   }

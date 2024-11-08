@@ -11,7 +11,7 @@ interface Note {
   }
 
 const renderNotes = (notes: Note[]) =>
-    notes.map((note) => (
+    notes?.map((note) => (
       <a key={note.noteId} href={`/notes/${note.noteId}`}>
         <Card>
           <Card.Body>
@@ -47,8 +47,7 @@ export const Home = () => {
             try {
                 const response = await fetch(fetchURL);
                 const data = await response.json();
-                console.log({data})
-                setNotes(data.message);
+                setNotes(data);
             } catch (error) {
               if (error instanceof Error) setErrorMsg(`${error.toString()} - ${fetchURL}`);
             } finally {

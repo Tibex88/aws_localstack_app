@@ -47,6 +47,8 @@ export EXTRA_CORS_ALLOWED_ORIGINS="*"
 # 	$(VENV_DIR)/Scripts/pip install -r $(REQUIREMENTS)
 # 	@echo "Dependencies installed from $(REQUIREMENTS)"
 
+
+# docker run -d -p 4566:4566 --name localstack-main -e LAMBDA_EXECUTOR=docker -e EXTRA_CORS_ALLOWED_ORIGINS='*' localstack/localstack
 # Run localstack in the virtual  ind etacked mode
 # this will pull localstack image from docker of not already present
 localstack_start:
@@ -66,7 +68,7 @@ bootstrap:
 
 ## Deploy the infrastructure
 deploy:
-		cd packages/infra && yarn && yarn cdklocal deploy
+		cd packages/infra && yarn && yarn cdklocal deploy -V
 
 # ####Frontend
 # Run the frontend
