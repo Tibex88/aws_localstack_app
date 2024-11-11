@@ -1,4 +1,4 @@
 {
-    "GATEWAY_URL": "https://0zcjsv8puv.execute-api.localhost.localstack.cloud:4566/prod/",
+    "GATEWAY_URL": "https://25mxizgbom.execute-api.localhost.localstack.cloud:4566/prod/",
     "REGION": "us-east-1"
   }
