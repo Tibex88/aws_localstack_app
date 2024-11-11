@@ -71,8 +71,12 @@ deploy:
 		cd packages/infra && yarn && yarn cdklocal deploy -V
 
 # ####Frontend
+# prepare the config file with the newly generated url
+prepare_frontend:
+		node packages/scripts/prepare-frontend.js --local
+
 # Run the frontend
-run_frontend:
+run_frontend:prepare_frontend
 		cd packages/frontend && yarn && yarn dev
 
 ### Build the frontend
@@ -88,6 +92,6 @@ run_frontend:
 # 		yarn cdklocal deploy --app="node dist/aws-sdk-js-notes-app-frontend.js";
 
 good_candidate:
-	make build bootstrap deploy
+	make build bootstrap run_frontend
 
 .PHONY: activate create install localstack_start build bootstrap deploy good_candidate
