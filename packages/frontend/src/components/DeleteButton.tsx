@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Button, Alert } from "react-bootstrap";
+import { 
+  // Button,
+   Alert } from "react-bootstrap";
+import {Button} from "./ui/button";
 import { GATEWAY_URL } from "../config.json";
 import { ButtonSpinner } from "../components";
 import { useNavigate } from "react-router-dom";
@@ -34,12 +37,10 @@ const DeleteButton = (props: { noteId: string }) => {
     <>
       {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
       <Button
-        variant="danger"
-        disabled={isDeleting}
+        variant="destructive"
         onClick={handleDelete}
       >
-        {isDeleting ? <ButtonSpinner /> : ""}
-        {isDeleting ? "Deleting..." : "Delete"}
+        {isDeleting ? "Deleting" : "Delete"}
       </Button>
     </>
   );
