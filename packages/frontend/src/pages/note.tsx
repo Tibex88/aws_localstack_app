@@ -6,8 +6,51 @@ import { Input } from '@/components/ui/input';
 import { GATEWAY_URL } from "../config.json";
 import { DeleteButton, SaveButton } from "./../components";
 import { HomeButton, LoadingSpinner,Container } from "../components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+
+import {
+  Breadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+
+export const NavigateHome = () => {
+
+
+  const location = useLocation();
+  const absolutePath = location.pathname; // This gives you the current absolute path  
+  const [_,b,c] = absolutePath.split('/');
+
+  return (
+  <>
+      <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbSeparator />
+
+        <BreadcrumbItem>
+          <BreadcrumbPage>{b}</BreadcrumbPage>
+        </BreadcrumbItem>
+
+        <BreadcrumbSeparator />
+
+        <BreadcrumbItem>
+          <BreadcrumbPage>{c}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  </>
+  )
+}
+
 export const ShowNote = () => {
   const { noteId } = useParams<'noteId'>();
   const [isLoading, setIsLoading] = useState(true);
@@ -36,41 +79,41 @@ export const ShowNote = () => {
   }, [noteId]);
 
   return (
-    <Container header={<HomeButton />}>
+    <Container header={<NavigateHome />}>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <Form {...form}>
-        <form>
-        <FormField
-            control={form.control}
-            name="note"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Edit note</FormLabel>
-                <FormControl className="col-12">
-                  <Input 
-                  {...field}
-                  placeholder="shadcn"
-                  value=  {noteContent}
-                  onChange={(e) => {
-                    const content = e.currentTarget.value;
-                    if (content) {
-                      setNoteContent(content);
-                    }
-                  }
-                    }
-                  />
-              </FormControl> 
-              </FormItem>
-            )}
+          <form>
+          <FormField
+              control={form.control}
+              name="note"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Edit note</FormLabel>
+                    <FormControl className="col-12">
+                      <Input 
+                      {...field}
+                      placeholder="shadcn"
+                      value=  {noteContent}
+                      onChange={(e) => {
+                        const content = e.currentTarget.value;
+                        if (content) {
+                          setNoteContent(content);
+                        }
+                      }
+                        }
+                      />
+                  </FormControl> 
+                </FormItem>
+              )}
           />  
 
-          <div className="mt-4 d-flex gap-2">
-            <SaveButton noteId={noteId || ""} noteContent={noteContent} />
-            <DeleteButton noteId={noteId || ""} />
-          </div>
-        </form>
+            <div className="mt-4 d-flex gap-2">
+              <SaveButton noteId={noteId || ""} noteContent={noteContent} />
+              <DeleteButton noteId={noteId || ""} />
+            </div>
+          </form>
         </Form>
       )}
     </Container>
