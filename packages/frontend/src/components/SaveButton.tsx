@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Button, Alert } from "react-bootstrap";
+import { 
+   Alert } from "react-bootstrap";
 import { GATEWAY_URL } from "../config.json";
 import { ButtonSpinner } from "../components";
 import { useNavigate } from "react-router-dom";
+import {Button} from "./ui/button";
 
 const SaveButton = (props: { noteId: string; noteContent: string }) => {
   const [isSaving, setIsSaving] = useState(false);
@@ -34,10 +36,12 @@ const SaveButton = (props: { noteId: string; noteContent: string }) => {
   return (
     <>
       {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
-      <Button disabled={isSaving} onClick={handleSave}>
-        {isSaving ? <ButtonSpinner /> : ""}
-        {isSaving ? "Saving..." : "Save"}
-      </Button>
+
+        <Button 
+          onClick={handleSave}
+          variant={isSaving ? "ghost" : "default"} >
+          {isSaving ? "Saving..." : "Save"}
+        </Button>
     </>
   );
 };

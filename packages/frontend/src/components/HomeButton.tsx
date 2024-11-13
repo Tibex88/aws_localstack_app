@@ -1,9 +1,12 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React from "react"
+import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
 
 const HomeButton = () => (
-  <Button href="/" variant="light" className="border border-secondary">
-    &lt; Home
+  <Button  variant="secondary" className="border border-secondary">
+    <Link to="/">
+      &lt; Home
+    </Link>
   </Button>
 );
 

@@ -1,8 +1,15 @@
+"use client"
 import React, { FormEvent, useState } from 'react'
 import { Container,HomeButton,ButtonSpinner } from "../components";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Button } from "../components/ui/button";
+import { Form,FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../components/ui/form";
+import {  Alert } from "react-bootstrap";
 import {  useNavigate } from 'react-router-dom';
 import { GATEWAY_URL } from "../config.json";
+import { Input } from '@/components/ui/input';
+
+import { useForm } from "react-hook-form"
+
 
 
 export const Create = () => {
@@ -10,6 +17,7 @@ export const Create = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [noteContent, setNoteContent] = useState("");
   const navigate = useNavigate();
+  const form = useForm();
 
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -18,7 +26,7 @@ export const Create = () => {
 
     setIsLoading(true);
 
-    try {
+    try { 
       await fetch(createNoteURL, {
         method: "POST",
         body: JSON.stringify({ content: noteContent }),
@@ -35,26 +43,38 @@ export const Create = () => {
   return (
     
     <Container header={<p>Create Note</p>}>
-      <form onSubmit={(e)=>{handleSubmit(e)}}>
-        {/* {errorMsg && <Alert variant="danger">{errorMsg}</Alert>} */}
-        <Form.Group controlId="content">
-          <Form.Label>Note Content</Form.Label>
-          <Form.Control
-            as="textarea"
-            placeholder={"Enter Note content"}
-            onChange={(e) => {
-              const content = e.currentTarget.value;
-              if (content) {
-                setNoteContent(content);
-              }
-            }}
-          />
-        </Form.Group>
-        <Button type="submit" disabled={!noteContent || isLoading} className="w-100">
-          {isLoading ? <ButtonSpinner /> : ""}
-          {isLoading ? "Creating..." : "Create"}
-        </Button>
-      </form>
+      <Form {...form}>
+        <form onSubmit={(e)=>{handleSubmit(e)}}>
+        <FormField
+            control={form.control}
+            name="note"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Start typing</FormLabel>
+                <FormControl className="col-12">
+                  <Input 
+                  {...field}
+                  placeholder="shadcn" 
+                  onChange = {(e) => {
+                    let content = e.target.value
+                    if (content && content.length < 1000) {
+                      setNoteContent(content);
+                    }
+                    else setErrorMsg("Note content must be less than 1000 characters");
+                    }
+                    }
+                  />
+              </FormControl> 
+              </FormItem>
+            )}
+          />  
+          <Button 
+            type="submit" className="w-100">
+            {/* {isLoading ? <ButtonSpinner /> : ""} */}
+            {isLoading ? "Creating..." : "Create"}
+          </Button>
+        </form> 
+      </Form> 
     </Container>
   )
 }

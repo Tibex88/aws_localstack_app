@@ -13,8 +13,8 @@ const isLocal = process.argv.includes("--local");
 
   try {
     const deployCommand = isLocal
-      ? "yarn cdklocal deploy --outputs-file"
-      : "yarn cdk deploy --outputs-file";
+    ? "yarn cdklocal deploy --require-approval never --outputs-file"
+    : "yarn cdk deploy --require-approval never --outputs-file";
     const execProcess = exec(`${deployCommand} ${cdkOutputsFile}`, {
       cwd: join(__dirname, "..", "infra"),
     });
@@ -31,7 +31,7 @@ const isLocal = process.argv.includes("--local");
   try {
     const configContents = JSON.parse(readFileSync(configFile));
     const cdkOutput = JSON.parse(readFileSync(cdkOutputsFile))[
-      "aws-sdk-js-notes-app"
+      "AwsSdkJsAppStack-5"
     ];
     configContents.GATEWAY_URL = cdkOutput.GatewayUrl;
     configContents.REGION = cdkOutput.Region;
