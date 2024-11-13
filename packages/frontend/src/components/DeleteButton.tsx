@@ -40,7 +40,7 @@ const DeleteButton = (props: { noteId: string }) => {
         variant="destructive"
         onClick={handleDelete}
       >
-        {isDeleting ? "Deleting" : "Delete"}
+        {isDeleting ? "Deleting..." : "Delete"}
       </Button>
     </>
   );

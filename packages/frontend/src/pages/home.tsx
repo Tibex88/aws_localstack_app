@@ -12,25 +12,25 @@ interface Note {
     attachment: boolean;
   }
 
+const dateStr = "11/13/24";
+
+function dateFormat(dateStr: string) {
+
+  return new Date(parseInt(dateStr)).toLocaleString();  
+  
+}
+
+
 const renderNotes = (notes: Note[]) =>
     notes?.map((note) => (
       <a key={note.noteId} href={`/notes/${note.noteId}`}>
         <Card>
-          {/* <Card.Body>
-            <Card.Title>
-              {note.attachment && (
-                <span role="img" aria-label="attachment" className="mr-1">
-                  📎
-                </span>
-              )} */}
               <CardContent>
                 {note.content}
               </CardContent>
-            {/* </Card.Title> */}
             <CardDescription className="">
-              Created: {new Date(parseInt(note.createdAt)).toLocaleString()}
+              Created: {dateFormat(note.createdAt)}
              </CardDescription>
-          {/* </Card.Body> */}
         </Card>
       </a>
     ));
