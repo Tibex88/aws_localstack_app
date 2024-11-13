@@ -73,12 +73,17 @@ We are using the following AWS services and their features to build our infrastr
         ```bash
         make good_candidate
         ```
-    - Then run the front end
-        ```bash
-        make run_frontend
-        ```
+At the end you are expected to see the following output:
 
-###Break down of what is in the Makefile
+```shell
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h + enter 
+```
+Now navigate to the link in your browser and test the application that has been deployed using aws resources on localstack.
+
+
+### Break down of what is in the Makefile
 #### LocalStack Management
 
 - **Start LocalStack**:
