@@ -13,4 +13,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/index.js',  // Custom file name for entry point
+        // chunkFileNames: 'assets/index.js', // Custom file name for chunks
+        assetFileNames: 'assets/index.css', // Custom file name for assets
+      }
+    }
+  }
 })
