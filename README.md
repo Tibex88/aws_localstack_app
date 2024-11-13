@@ -178,9 +178,24 @@ Done in 56.71s.
 ### Example Usage
 
 1. **Initialize the environment**:
-   ```bash
-   make install-dependencies
-   ```
+  - Create the virtual environment:
+    ```bash
+    python -m venv .venv
+    ```
+
+  - Activate the virtual environment:
+    ```bash
+    source .venv/bin/activate
+    ```
+    Or
+    ```bash
+    . .venv/bin/activate
+    ```
+
+  - Install required dependancies:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 2. **Start LocalStack and deploy infrastructure**:
    ```bash
