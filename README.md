@@ -202,18 +202,12 @@ Done in 56.71s.
    make localstack_start
    make good_candidate
    ```
-
-3. **Run the frontend**:
-   ```bash
-   make run_frontend
-   ```
-
-4. **Stop LocalStack when done**:
+3. **Stop LocalStack when done**:
    ```bash
    make localstack_stop
    ```
 
-5. **Clean Up**:
+4. **Clean Up**:
   - To remove the virtual environment:
     ```bash
     make clean
