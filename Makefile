@@ -1,4 +1,5 @@
 export EXTRA_CORS_ALLOWED_ORIGINS="*"
+JS_FILES := $(wildcard dist/assets/index-*.js)
 
 localstack_start:
 	localstack start -d
@@ -24,11 +25,21 @@ deploy:
 prepare_frontend:
 		node packages/scripts/prepare-frontend.js --local
 
-# Run the frontend
-run_frontend:prepare_frontend
-		cd packages/frontend && yarn && yarn dev
+build-frontend: prepare_frontend
+		cd packages/frontend && yarn && yarn build
+
+bootstrap-frontend: build-frontend
+		cd packages/frontend && yarn cdklocal bootstrap --app="node dist/assets/index.js";
+
+deploy-frontend: bootstrap-frontend
+		cd packages/frontend && yarn cdklocal deploy --app="node dist/assets/index.js";
+
+
+# # Run the frontend
+# run_frontend: deploy-frontend
+# 		cd packages/frontend && yarn && yarn dev
 
 good_candidate:
-	make localstack_start build bootstrap run_frontend
+	make localstack_start build bootstrap deploy-frontend
 
 .PHONY: activate create install localstack_start build bootstrap deploy good_candidate
