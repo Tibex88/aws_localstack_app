@@ -31,8 +31,9 @@ const isLocal = process.argv.includes("--local");
   try {
     const configContents = JSON.parse(readFileSync(configFile));
     const cdkOutput = JSON.parse(readFileSync(cdkOutputsFile))[
-      "aws-sdk-js-notes-app"
+      "AwsSdkJsAppStack-5"
     ];
+    console.log({configContents, cdkOutput});
     configContents.GATEWAY_URL = cdkOutput.GatewayUrl;
     configContents.REGION = cdkOutput.Region;
     writeFileSync(configFile, JSON.stringify(configContents, null, 2));
