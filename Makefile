@@ -92,6 +92,6 @@ run_frontend:prepare_frontend
 # 		yarn cdklocal deploy --app="node dist/aws-sdk-js-notes-app-frontend.js";
 
 good_candidate:
-	make build bootstrap run_frontend
+	make localstack_start build bootstrap run_frontend
 
 .PHONY: activate create install localstack_start build bootstrap deploy good_candidate
