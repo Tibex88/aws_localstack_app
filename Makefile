@@ -29,10 +29,10 @@ build-frontend: prepare_frontend
 		cd packages/frontend && yarn && yarn build
 
 bootstrap-frontend: build-frontend
-		cd packages/frontend && yarn cdklocal bootstrap --app="node dist/assets/index.js";
+		cd packages/infra && yarn cdklocal bootstrap --app="node dist/app-frontend.js";
 
 deploy-frontend: bootstrap-frontend
-		cd packages/frontend && yarn cdklocal deploy --app="node dist/assets/index.js";
+		cd packages/infra && yarn cdklocal deploy --app="node dist/app-frontend.js";
 
 
 # # Run the frontend
